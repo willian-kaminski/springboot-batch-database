@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class AuditoriaStepWriter {
+public class AuditoriaItemWriter {
 
     @Bean
     public ItemWriter<Auditoria> jdbcCursorWriter() {
