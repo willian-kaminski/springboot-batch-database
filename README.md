@@ -11,4 +11,4 @@ do processamento atravez de leitura de base de dados.
 * Spring 5
 * Docker
 * Mysql
-* MapStruct
+* Lombok
