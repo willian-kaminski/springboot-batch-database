@@ -1,6 +1,8 @@
 package com.kaminski.batch.database.configuration.batch.reader;
 
+import com.kaminski.batch.database.configuration.mapper.AuditoriaMapper;
 import com.kaminski.batch.database.domain.Auditoria;
+import lombok.RequiredArgsConstructor;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.PagingQueryProvider;
 import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
@@ -12,7 +14,10 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 
 @Component
+@RequiredArgsConstructor
 public class AuditoriaPagingItemReader {
+
+    private final AuditoriaMapper mapper;
 
     /**
      *
@@ -28,8 +33,8 @@ public class AuditoriaPagingItemReader {
                 .name("jdbcPagingItemReader")
                 .dataSource(dataSource)
                 .queryProvider(queryProvider)
-                .pageSize(1)
-                .rowMapper(new BeanPropertyRowMapper<>(Auditoria.class))
+                .pageSize(2)
+                .rowMapper(mapper.map())
                 .build();
     }
 

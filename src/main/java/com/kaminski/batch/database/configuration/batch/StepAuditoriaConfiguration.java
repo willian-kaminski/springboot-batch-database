@@ -1,6 +1,7 @@
 package com.kaminski.batch.database.configuration.batch;
 
 import com.kaminski.batch.database.domain.Auditoria;
+import com.kaminski.batch.database.exception.AuditoriaException;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -18,10 +19,12 @@ public class StepAuditoriaConfiguration {
             ItemReader<Auditoria> itemReader, ItemWriter<Auditoria> itemWriter){
 
         return new StepBuilder("stepProcessarAuditoria", jobRepository)
-                .<Auditoria, Auditoria>chunk(1, transactionManager)
+                .<Auditoria, Auditoria>chunk(10, transactionManager)
                 .reader(itemReader)
                 .writer(itemWriter)
-                .allowStartIfComplete(true)
+                .faultTolerant()
+                .skipLimit(5)
+                .skip(AuditoriaException.class)
                 .build();
     }
 
